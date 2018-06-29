@@ -1,0 +1,93 @@
+* {
+  font-family: Roboto;
+  padding: 0;
+  margin: 0; }
+
+body {
+  height: 100vh;
+  position: relative; }
+
+header {
+  width: 100%;
+  height: 10vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center; }
+  header .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; }
+    header .logo img {
+      width: 80%; }
+  header .header-data {
+    vertical-align: middle;
+    text-align: center;
+    padding-left: 15px;
+    border-radius: 5px 0 5px 5px;
+    color: white;
+    width: 100%;
+    height: 100%;
+    background-color: #9dd1e0; }
+    header .header-data p {
+      font-weight: 300;
+      font-size: 12px; }
+
+main {
+  width: 100%;
+  overflow: hidden;
+  height: 79vh; }
+
+#map {
+  width: 100%;
+  height: 100%; }
+
+footer {
+  height: 11vh;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center; }
+  footer .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; }
+    footer .logo img {
+      width: 80%; }
+  footer .footer-links a {
+    padding: 0 5px;
+    text-decoration: none;
+    color: #9dd1e0; }
+    footer .footer-links a:hover {
+      color: red !important; }
+    footer .footer-links a:link {
+      color: #358da7; }
+    footer .footer-links a:visited {
+      color: #358da7; }
+
+.about-wrp {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 80%; }
+  .about-wrp div {
+    width: 80%;
+    margin: 0 auto;
+    padding: 10px; }
+
+main {
+  position: relative; }
+
+.bglogo {
+  position: absolute;
+  width: 250px;
+  left: 50%;
+  top: 45%;
+  opacity: .4; }
+  .bglogo img {
+    width: 100%; }
+
+* {
+  font-family: Roboto; }
