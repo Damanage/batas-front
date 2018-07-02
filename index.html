@@ -6,10 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Batas frontend environment</title>
     <link rel="stylesheet" href="styles/css/main.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
-    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript">
-    </script>
-    <script src="scripts/circle-btn.js"></script>
 </head>
 <body>
     <header>
@@ -27,6 +25,7 @@
         <div class="map" id="map" >
 
         </div>
+        <div class="anu">text</div>
     </main>
     <footer>
         <div class="logo">
@@ -39,31 +38,63 @@
             <a href="about.html">О Проекте</a>
         </div>
     </footer> 
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <script src="scripts/circle-btn.js"></script>
     <script>
-        ymaps.ready(init);
-        var myMap;
-
-        function init(){     
-            myMap = new ymaps.Map("map", {
+        ymaps.ready(function init(){     
+            const myMap = new ymaps.Map("map", {
                 center: [55.76, 37.64],
-                zoom: 7
+                zoom: 12,
+                controls: []
             });
-        }
-        var button = new ymaps.control.Button({
-            data: {
-                iconType: 'loupe',
-                title: 'Button Text'
-            },
-            options: {
-                layout: 'round#buttonLayout',
-                maxWidth: 120
-                
-            }
+
+
+            let rulerControl = new ymaps.control.RulerControl({
+                options: {
+                    layout: 'round#rulerLayout'
+                }
+            });
+            myMap.controls.add(rulerControl);
+
+            let zoomControl = new ymaps.control.ZoomControl({
+                options: {
+                    layout: 'round#zoomLayout'
+                }
+            });
+            myMap.controls.add(zoomControl);
+
+            let geolocationControl = new ymaps.control.GeolocationControl({
+                options: {
+                    layout: 'round#buttonLayout'
+                }
+            });
+            myMap.controls.add(geolocationControl);
             
+            let fullScreenCtrl = new ymaps.control.FullscreenControl({
+                data: {
+                    image: 'img/icons/full-screen.png',
+                    title: 'Полный экран'
+                },
+                options: {
+                    layout: 'round#buttonLayout'
+                }
+            })
+            myMap.controls.add(fullScreenCtrl);
+
+            let typeSelector = new ymaps.control.TypeSelector({
+                options: {
+                    layout: 'round#listBoxLayout',
+                    itemLayout: 'round#listBoxItemLayout',
+                    itemSelectableLayout: 'round#listBoxItemSelectableLayout',
+                    float: 'none',
+                    position: {
+                        bottom: '40px',
+                        left: '10px'
+                    }
+                }
+            });
+            myMap.controls.add(typeSelector);
         });
-        myMap.controls.add(button);
-
-
     </script>   
 </body>
 </html>
