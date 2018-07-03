@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="styles/css/main.css">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+    <script
+        src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+        crossorigin="anonymous">
+    </script>
 </head>
 <body>
     <header>
@@ -19,11 +24,11 @@
             <h4>Find energy here</h4>
             <p>Моментальный магазин батареек</p>
         </div>
+        <small class="burger"></small>
     </header>
         
     <main>
         <div class="map" id="map" >
-
         </div>
         <div class="anu">text</div>
     </main>
@@ -94,6 +99,13 @@
                 }
             });
             myMap.controls.add(typeSelector);
+            myMap.controls.add(new ymaps.control.SearchControl);
+        });
+        
+        
+        $('.burger').on('click', ()=>{
+            $('.burger').toggleClass('--active');
+            $('footer').toggleClass('foo-active');
         });
     </script>   
 </body>

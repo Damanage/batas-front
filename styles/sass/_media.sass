@@ -1,0 +1,57 @@
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+@media (max-width: 767px)
+    body 
+        position: relative
+        header 
+            background-color: trasparent
+            z-index: 7
+            .logo
+                display: none
+            .header-data
+                border-radius: 0 0 5px 5px
+        main 
+            height: 90vh
+        footer
+            transition: transform 500ms
+            transform: translateY(-100%)
+
+            bottom: 0
+            width: 100% 
+            position: absolute
+            z-index: 5;
+            left: 0;
+            top: 10vh;
+            height: 40vh
+            .footer-links
+                height: 60%
+                display: flex
+                flex-direction: column
+                justify-content: space-around
+    .foo-active
+        display: flex
+        transform: translateY(0%)
+
+    .burger
+        transform: rotateZ(0deg)
+        display: block
+        transition: transform 300ms ease
+    .--active
+        transform: rotateZ(45deg)
+        transition: transform 300ms ease
+        &:before
+            display: none
+        &:after
+            transform: rotateZ(-90deg) translateX(7px)
+            transition: transform 300ms ease
+            
+
+
+/* Small devices (tablets, 768px and up) */
+// @media (min-width: 768px) 
+
+// /* Medium devices (desktops, 992px and up) */
+// @media (min-width: 992px) 
+
+// /* Large devices (large desktops, 1200px and up) */
+// @media (min-width: 1200px) 
