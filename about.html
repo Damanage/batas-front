@@ -6,19 +6,25 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="styles/css/main.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+    <script
+        src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+        crossorigin="anonymous">
+    </script>
     <title>Document</title>
 </head>
 <body>
         <header>
-            <div class="logo">
-                <img src="img/logo.png" alt="logo must be there">
-            </div>
-            <div class="header-data">
-                <h2>Battery AutoShop</h2>
-                <h4>find energy here</h4>
-                <p>Моментальный магазин батареек</p>
-            </div>
-        </header>
+                <div class="logo">
+                    <img src="img/logo.png" alt="logo must be there">
+                </div>
+                <div class="header-data">
+                    <h2>Battery AutoShop</h2>
+                    <h4>Find energy here</h4>
+                    <p>Моментальный магазин батареек</p>
+                </div>
+                <small class="burger"></small>
+            </header>
         <main>
             <div class="about-wrp">
                 <div class="company-name">
@@ -54,6 +60,11 @@
     
         
     </div>
-    
+   <script>
+       $('.burger').on('click', ()=>{
+            $('.burger').toggleClass('--active');
+            $('footer').toggleClass('foo-active');
+        });
+   </script>
 </body>
 </html>
