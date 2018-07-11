@@ -53,24 +53,24 @@
                 controls: []
             });
 
-
-            let rulerControl = new ymaps.control.RulerControl({
-                options: {
-                    layout: 'round#rulerLayout'
-                }
-            });
-            myMap.controls.add(rulerControl);
-
             let zoomControl = new ymaps.control.ZoomControl({
                 options: {
-                    layout: 'round#zoomLayout'
+                    layout: 'round#zoomLayout',
+                    position: {
+                        right: '0px',
+                        top: '200px'
+                    }
                 }
             });
             myMap.controls.add(zoomControl);
 
             let geolocationControl = new ymaps.control.GeolocationControl({
                 options: {
-                    layout: 'round#buttonLayout'
+                    layout: 'round#buttonLayout',
+                    position: {
+                        bottom: '30px',
+                        right: '10px'
+                    }
                 }
             });
             myMap.controls.add(geolocationControl);
@@ -85,6 +85,13 @@
                 }
             })
             myMap.controls.add(fullScreenCtrl);
+            
+            myMap.controls.add('searchControl', {
+                position: {
+                    left: '5px',
+                    top: '5px'
+                }
+            });
 
             let typeSelector = new ymaps.control.TypeSelector({
                 options: {
@@ -99,7 +106,7 @@
                 }
             });
             myMap.controls.add(typeSelector);
-            myMap.controls.add(new ymaps.control.SearchControl);
+            
         });
         
         
