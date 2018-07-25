@@ -46,67 +46,73 @@
     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
     <script src="scripts/circle-btn.js"></script>
     <script>
+        
         ymaps.ready(function init(){     
             const myMap = new ymaps.Map("map", {
                 center: [55.76, 37.64],
                 zoom: 12,
                 controls: []
             });
+            //Adding custom controll btns to map;
+            mapControls();
 
-            let zoomControl = new ymaps.control.ZoomControl({
-                options: {
-                    layout: 'round#zoomLayout',
-                    position: {
-                        right: '0px',
-                        top: '200px'
-                    }
-                }
-            });
-            myMap.controls.add(zoomControl);
 
-            let geolocationControl = new ymaps.control.GeolocationControl({
-                options: {
-                    layout: 'round#buttonLayout',
-                    position: {
-                        bottom: '30px',
-                        right: '10px'
+            function mapControls(){
+                let zoomControl = new ymaps.control.ZoomControl({
+                    options: {
+                        layout: 'round#zoomLayout',
+                        position: {
+                            right: '0px',
+                            top: '200px'
+                        }
                     }
-                }
-            });
-            myMap.controls.add(geolocationControl);
-            
-            let fullScreenCtrl = new ymaps.control.FullscreenControl({
-                data: {
-                    image: 'img/icons/full-screen.png',
-                    title: 'Полный экран'
-                },
-                options: {
-                    layout: 'round#buttonLayout'
-                }
-            })
-            myMap.controls.add(fullScreenCtrl);
-            
-            myMap.controls.add('searchControl', {
-                position: {
-                    left: '5px',
-                    top: '5px'
-                }
-            });
+                });
+                myMap.controls.add(zoomControl);
 
-            let typeSelector = new ymaps.control.TypeSelector({
-                options: {
-                    layout: 'round#listBoxLayout',
-                    itemLayout: 'round#listBoxItemLayout',
-                    itemSelectableLayout: 'round#listBoxItemSelectableLayout',
-                    float: 'none',
-                    position: {
-                        bottom: '40px',
-                        left: '10px'
+                let geolocationControl = new ymaps.control.GeolocationControl({
+                    options: {
+                        layout: 'round#buttonLayout',
+                        position: {
+                            bottom: '30px',
+                            right: '10px'
+                        }
                     }
-                }
+                });
+                myMap.controls.add(geolocationControl);
+                
+                let fullScreenCtrl = new ymaps.control.FullscreenControl({
+                    data: {
+                        image: 'img/icons/full-screen.png',
+                        title: 'Полный экран'
+                    },
+                    options: {
+                        layout: 'round#buttonLayout'
+                    }
+                })
+                myMap.controls.add(fullScreenCtrl);
+                
+                myMap.controls.add('searchControl', {
+                    position: {
+                        left: '5px',
+                        top: '5px'
+                    }
+                });
+
+                let typeSelector = new ymaps.control.TypeSelector({
+                    options: {
+                        layout: 'round#listBoxLayout',
+                        itemLayout: 'round#listBoxItemLayout',
+                        itemSelectableLayout: 'round#listBoxItemSelectableLayout',
+                        float: 'none',
+                        position: {
+                            bottom: '40px',
+                            left: '10px'
+                        }
+                    }
             });
             myMap.controls.add(typeSelector);
-            
+        }
+ 
         });
         
         
