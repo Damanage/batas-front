@@ -30,7 +30,6 @@
     <main>
         <div class="map" id="map" >
         </div>
-        <div class="anu">text</div>
     </main>
     <footer>
         <div class="logo">
@@ -45,7 +44,53 @@
     </footer> 
     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
     <script src="scripts/circle-btn.js"></script>
-    <script>
+    <script>    
+        let dataMap = {
+            type: "FeatureCollection",
+            features: [{
+                id: Symbol,
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [55.831903, 37.411961]
+                },
+                properties: {
+                    hintContent: 'Текст всплывающей подсказки',
+                    balloonContent: '<p class="test">Содержимое балуна</p>',
+                    clusterCaption: "<strong><s>Еще</s> одна</strong> метка",
+                    hintContent: "<strong>Текст  <s>подсказки</s></strong>"
+                }
+            },
+            {
+                id: Symbol,
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [55.831903, 37.411961]
+                },
+                properties: {
+                    hintContent: 'Текст всплывающей подсказки',
+                    balloonContent: 'Содержимое балуна'
+                }
+            },
+            {
+                id: Symbol,
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [55.831903, 37.411961]
+                },
+                properties: {
+                    hintContent: 'Текст всплывающей подсказки',
+                    balloonContent: 'Содержимое балуна'
+                }
+            }
+            
+            
+            
+            ],
+
+        }
         
         ymaps.ready(function init(){     
             const myMap = new ymaps.Map("map", {
@@ -55,8 +100,21 @@
             });
             //Adding custom controll btns to map;
             mapControls();
+            //Adding on map clasters
+            clasterise();
 
-
+            
+            function clasterise (){
+                objectManager = new ymaps.ObjectManager({
+                    clusterize: true,
+                    gridSize: 32,
+                    clusterDisableClickZoom: true
+                });
+                objectManager.objects.options.set('preset', 'islands#blueDotIcon');
+                objectManager.clusters.options.set('preset', 'islands#blueClusterIcons');
+                myMap.geoObjects.add(objectManager);
+                objectManager.add(dataMap);
+            }
             function mapControls(){
                 let zoomControl = new ymaps.control.ZoomControl({
                     options: {
@@ -112,9 +170,8 @@
             });
             myMap.controls.add(typeSelector);
         }
- 
         });
-        
+        console.log(dataMap);
         
         $('.burger').on('click', ()=>{
             $('.burger').toggleClass('--active');
