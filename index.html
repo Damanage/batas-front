@@ -45,57 +45,132 @@
     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
     <script src="scripts/circle-btn.js"></script>
     <script>    
-        let dataMap = {
+        
+        
+        ymaps.ready(function init(){
+
+
+            let dataMap = {
             type: "FeatureCollection",
             features: [{
-                id: Symbol,
+                id: 01,
                 type: 'Feature',
                 geometry: {
                     type: 'Point',
-                    coordinates: [55.831903, 37.411961]
+                    coordinates: [55.813760, 37.479642]
                 },
                 properties: {
-                    hintContent: 'Текст всплывающей подсказки',
-                    balloonContent: '<p class="test">Содержимое балуна</p>',
+                    hintContent: 'Battery must be there',
+                    balloonContent: '<p class="test">content content content</p>',
                     clusterCaption: "<strong><s>Еще</s> одна</strong> метка",
-                    hintContent: "<strong>Текст  <s>подсказки</s></strong>"
+                    // hintContent: "<strong>Текст  <s>подсказки</s></strong>"
+                },
+                options: {
+                    iconLayout: 'default#imageWithContent',
+                    // Своё изображение иконки метки.
+                    iconImageHref: 'img/batt.png',
+                    // Размеры метки.
+                    iconImageSize: [48, 48],
+                    // Смещение левого верхнего угла иконки относительно
+                    // её "ножки" (точки привязки).
+                    iconImageOffset: [-24, -24],
+                    // Смещение слоя с содержимым относительно слоя с картинкой.
+                    iconContentOffset: [15, 15],
+                    // Макет содержимого.
+                    
                 }
             },
             {
-                id: Symbol,
+                id: 02,
                 type: 'Feature',
                 geometry: {
                     type: 'Point',
-                    coordinates: [55.831903, 37.411961]
+                    coordinates: [55.813415, 37.477250]
                 },
                 properties: {
-                    hintContent: 'Текст всплывающей подсказки',
-                    balloonContent: 'Содержимое балуна'
+                    hintContent: 'Battery must be there',
+                    balloonContent: '<p class="test">content content content</p>',
+                    clusterCaption: "<strong><s>Еще</s> одна</strong> метка",
+                    // hintContent: "<strong>Текст  <s>подсказки</s></strong>"
+                },
+                options: {
+                    iconLayout: 'default#imageWithContent',
+                    // Своё изображение иконки метки.
+                    iconImageHref: 'img/batt.png',
+                    // Размеры метки.
+                    iconImageSize: [48, 48],
+                    // Смещение левого верхнего угла иконки относительно
+                    // её "ножки" (точки привязки).
+                    iconImageOffset: [-24, -24],
+                    // Смещение слоя с содержимым относительно слоя с картинкой.
+                    iconContentOffset: [15, 15],
+                    // // Макет содержимого.
+                    
                 }
             },
             {
-                id: Symbol,
+                id: 03,
                 type: 'Feature',
                 geometry: {
                     type: 'Point',
-                    coordinates: [55.831903, 37.411961]
+                    coordinates: [55.812896, 37.480085]
                 },
                 properties: {
-                    hintContent: 'Текст всплывающей подсказки',
-                    balloonContent: 'Содержимое балуна'
+                    hintContent: 'Battery must be there',
+                    balloonContent: '<p class="test">content content content</p>',
+                    clusterCaption: "<strong><s>Еще</s> одна</strong> метка",
+                    // hintContent: "<strong>Текст  <s>подсказки</s></strong>"
+                },
+                options: {
+                    iconLayout: 'default#imageWithContent',
+                    // Своё изображение иконки метки.
+                    iconImageHref: 'img/batt.png',
+                    // Размеры метки.
+                    iconImageSize: [48, 48],
+                    // Смещение левого верхнего угла иконки относительно
+                    // её "ножки" (точки привязки).
+                    iconImageOffset: [-24, -24],
+                    // Смещение слоя с содержимым относительно слоя с картинкой.
+                    iconContentOffset: [15, 15],
+                    // Макет содержимого.
+                    
                 }
-            }
-            
-            
-            
-            ],
+            },
+            {
+                id: 04,
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [55.814793, 37.478859]
+                },
+                properties: {
+                    hintContent: 'Battery must be there',
+                    balloonContent: '<p class="test">content content content</p>',
+                    clusterCaption: "<strong><s>Еще</s> одна</strong> метка",
+                    // hintContent: "<strong>Текст  <s>подсказки</s></strong>"
+                },
+                options: {
+                    iconLayout: 'default#imageWithContent',
+                    // Своё изображение иконки метки.
+                    iconImageHref: 'img/batt.png',
+                    // Размеры метки.
+                    iconImageSize: [48, 48],
+                    // Смещение левого верхнего угла иконки относительно
+                    // её "ножки" (точки привязки).
+                    iconImageOffset: [-24, -24],
+                    // Смещение слоя с содержимым относительно слоя с картинкой.
+                    iconContentOffset: [15, 15],
+                    // Макет содержимого.
+                    
+                }
+            }],
 
         }
-        
-        ymaps.ready(function init(){     
+
+
             const myMap = new ymaps.Map("map", {
                 center: [55.76, 37.64],
-                zoom: 12,
+                zoom: 13,
                 controls: []
             });
             //Adding custom controll btns to map;
@@ -111,7 +186,7 @@
                     clusterDisableClickZoom: true
                 });
                 objectManager.objects.options.set('preset', 'islands#blueDotIcon');
-                objectManager.clusters.options.set('preset', 'islands#blueClusterIcons');
+                objectManager.clusters.options.set('preset', 'islands#blueDotIcon');
                 myMap.geoObjects.add(objectManager);
                 objectManager.add(dataMap);
             }
@@ -171,7 +246,6 @@
             myMap.controls.add(typeSelector);
         }
         });
-        console.log(dataMap);
         
         $('.burger').on('click', ()=>{
             $('.burger').toggleClass('--active');
