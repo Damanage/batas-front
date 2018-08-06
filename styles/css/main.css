@@ -36,9 +36,13 @@ header {
     width: 100%;
     height: 100%;
     background-color: #9dd1e0; }
+    header .header-data h2 {
+      font-size: 2.2em; }
+    header .header-data h4 {
+      font-size: 1.4em; }
     header .header-data p {
       font-weight: 300;
-      font-size: 12px; }
+      font-size: 15px; }
 
 .burger {
   display: none;
@@ -103,9 +107,18 @@ footer {
   justify-content: center;
   height: 80%; }
   .about-wrp div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
     width: 80%;
-    margin: 0 auto;
-    padding: 10px; }
+    margin: 0 auto; }
+
+.data {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 40px;
+  font-weight: 500; }
 
 main {
   position: relative; }
@@ -119,6 +132,70 @@ main {
   .bglogo img {
     width: 100%; }
 
+.bl-title {
+  color: #9dd1e0; }
+
+.bl-descr {
+  padding: 10px;
+  border: 1px dashed #9dd1e0;
+  border-radius: 12px; }
+
+.bl-part {
+  padding: 5px 0; }
+
+.bl-footer {
+  display: flex;
+  justify-content: space-between; }
+
+.buy-btn {
+  background-color: #9dd1e0;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 15px;
+  color: white;
+  font-weight: 500;
+  float: right;
+  margin-top: 5px;
+  margin-bottom: 5px; }
+  .buy-btn:hover {
+    background-color: #52bddc; }
+
+.bl-details {
+  font-weight: 500;
+  color: #636363;
+  text-align: center;
+  border-radius: 8px;
+  padding: 5px 0;
+  background: linear-gradient(to top, #52bddc 0%, #8ac7d8 16%, #c0d5e5 47%, #f7f7f7 89%);
+  position: relative; }
+  .bl-details img {
+    border-radius: 8px;
+    transform: scaleY(0);
+    transition: transform .15s linear;
+    transform-origin: top;
+    overflow: hidden; }
+  .bl-details summary {
+    display: inline-block;
+    padding-left: 1.5em;
+    cursor: pointer;
+    outline: 0;
+    transition: color .12s; }
+    .bl-details summary:hover {
+      color: #d06c6c; }
+    .bl-details summary::-webkit-details-marker {
+      display: none; }
+    .bl-details summary::-moz-list-bullet {
+      list-style-type: none; }
+
+details[open] {
+  min-height: 2em; }
+  details[open] img {
+    transition: transform .15s linear;
+    transform: scaleY(1);
+    width: 60%; }
+  details[open]:before {
+    transform: rotate(90deg); }
+
 /* Extra small devices (phones, less than 768px) */
 /* No media query since this is the default in Bootstrap */
 @media (max-width: 767px) {
@@ -131,6 +208,13 @@ main {
         display: none; }
       body header .header-data {
         border-radius: 0 0 5px 5px; }
+        body header .header-data h2 {
+          font-size: 1.6em !important; }
+        body header .header-data h4 {
+          font-size: 1.1em !important; }
+        body header .header-data p {
+          font-weight: 300;
+          font-size: 13px !important; }
     body main {
       height: 90vh; }
     body footer {
@@ -162,7 +246,13 @@ main {
       display: none; }
     .--active:after {
       transform: rotateZ(-90deg) translateX(7px);
-      transition: transform 300ms ease; } }
+      transition: transform 300ms ease; }
+  .bglogo {
+    top: unset;
+    left: 14%;
+    bottom: 5%; }
+  .bl-details img {
+    border-radius: unset; } }
 
 /* Small devices (tablets, 768px and up) */
 * {

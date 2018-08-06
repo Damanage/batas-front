@@ -42,7 +42,7 @@
             <a href="about.html">О Проекте</a>
         </div>
     </footer> 
-    
+   
     <script src="battas.json" type="application/json" >  </script>
     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
     <script src="scripts/circle-btn.js"></script>
@@ -56,7 +56,7 @@
 
                 ,{"id":"123","key":"123","value":{"_id":"8fe258bsfb4b2f91f5c463a7229e085c64","_rev":"106-fd466268ca7ab9fdcdf07fa62060eda5","type":"Battery","geometry":{"type":"Point","coordinates":[55.802890, 37.657000]},"properties":{"product":"AAA","price":"400","currency":"RUB","fromdate":"2017-12-11","comments":"аккуратненько в кустиках"},"status":"reserved"}}
                 ,{"id":"456","key":"456","value":{"_id":"8fe258bb4b2f91f5c463a7229evv85c64","_rev":"106-fd466268ca7ab9fdcdf07fa62060eda5","type":"Battery","geometry":{"type":"Point","coordinates":[55.811977, 37.656785]},"properties":{"product":"VGA","price":"4100","currency":"RUB","fromdate":"2017-12-11","comments":"под елкой"},"status":"reserved"}}
-                ,{"id":"789","key":"789","value":{"_id":"8fe258bb4bv2f91fsf5c463a7229e085c64","_rev":"106-fd466268ca7ab9fdcdf07fa62060eda5","type":"Battery","geometry":{"type":"Point","coordinates":[55.806806, 37.681247]},"properties":{"product":"AVA","price":"1400","currency":"RUB","fromdate":"2017-12-11","comments":"Под полицейским участком"},"status":"reserved"}}
+                ,{"id":"789","key":"789","value":{"_id":"8fe258bb4bv2f91fsf5c463a7229e085c64","_rev":"106-fd466268ca7ab9fdcdf07fa62060eda5","type":"Battery","geometry":{"type":"Point","coordinates":[55.806806, 37.681247]},"properties":{"product":"AVA","price":"1400","currency":"RUB","fromdate":"2017-12-11","comments":"Под полицейским участком. 200м под землей, необходимо арендовать экскаватор"},"status":"reserved"}}
                 ,{"id":"321","key":"321","value":{"_id":"8fe258bb4b2f91f5c463a7229evc085c64","_rev":"106-fd466268ca7ab9fdcdf07fa62060eda5","type":"Battery","geometry":{"type":"Point","coordinates":[55.794308, 37.677814]},"properties":{"product":"CR2032","price":"400","currency":"RUB","fromdate":"2017-12-11","comments":"Лишь избранный обрящет сей ценный артефакт"},"status":"reserved"}}
                 ]
             }
@@ -88,18 +88,45 @@
                             hintContent: `${element.value.properties.product}`,
                             balloonContent: 
                                 `
-                                <p class="bl-content"> ${element.value.properties.comments} </p>
-                                <p class="price">
-                                        ${element.value.properties.price} <span class="units">${element.value.properties.currency}</span>
-                                </p>
-                                <p class="creation-time">
-                                    Дата создания: ${element.value.properties.fromdate}
-                                </p>
+                                <div class="bl-main">
+                                    <div class="bl-head bl-part">
+                                        <h2 class="bl-title"> ${element.value.properties.product} </h2>
+                                    </div>
+                                    <div class="photo">
+                                        <div class="details">
+                                            <details class="bl-details">
+                                                <summary>Фото</summary>
+                                                <img src="img/bts.jpeg" alt="ballon-photo">
+                                            </details>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="bl-content bl-part">
+                                        Описание:
+                                        <div class="bl-descr ">
+                                            ${element.value.properties.comments}
+                                        </div>
+                                    </div>
+                                    <div class="bl-footer bl-part">
+                                        <p class="price">
+                                            Цена:  <strong> ${element.value.properties.price} </strong> <span class="units">${element.value.properties.currency}</span>
+                                        </p>
+                                        <p class="creation-time">
+                                            Создано: <strong> ${element.value.properties.fromdate} </strong>
+                                        </p>
+                                    </div>
+                                    <hr>
+                                    
+                                </div>
+                                <button class="buy-btn">Купить</button>     
+                            
                                 ` ,
                             clusterCaption: `${element.value.properties.product}`,
                             // hintContent: "<strong>Текст  <s>подсказки</s></strong>"
                         },
                         options: {
+                            minHeight: 450,
+                            maxHeight: 700,
                             iconLayout: 'default#imageWithContent',
                             // Своё изображение иконки метки.
                             iconImageHref: 'img/batt.png',
@@ -119,23 +146,26 @@
                 });
             }
         }
-
-        let dick = new DataMap(dataFile.rows)
-        dick.setData = dataFile.rows;
+       
     </script>
     <script>    
         
         
         ymaps.ready(function init(){
+            console.log( Math.max(document.documentElement.clientWidth, window.innerWidth || 0))
 
 
             let dataMap = new DataMap(dataFile.rows);
             dataMap.setData = dataFile.rows;
 
+            let myBallon = ymaps.templateLayoutFactory.createClass(
+                `<div class="myBallon"></div>`
+            );
+
 
             const myMap = new ymaps.Map("map", {
                 center: [55.76, 37.64],
-                zoom: 13,
+                zoom: 8,
                 controls: []
             });
             //Adding custom controll btns to map;
@@ -145,11 +175,46 @@
 
             
             function clasterise (){
-                objectManager = new ymaps.ObjectManager({
-                    clusterize: true,
-                    gridSize: 32,
-                    clusterDisableClickZoom: true
-                });
+                let vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+                if(vw <= 767){
+                    objectManager = new ymaps.ObjectManager({
+                        balloonContentLayout: myBallon,
+                        clusterDisableClickZoom: true,
+                        clusterOpenBalloonOnClick: true,
+                        // Устанавливаем стандартный макет балуна кластера "Карусель".
+                        clusterBalloonContentLayout: 'cluster#balloonCarousel',
+                        // Устанавливаем режим открытия балуна. 
+                        // В данном примере балун никогда не будет открываться в режиме панели.
+                        clusterBalloonPanelMaxMapArea: 0,
+                        // Устанавливаем размеры макета контента балуна (в пикселях).
+                        
+                        clusterBalloonContentLayoutWidth: 250,
+                        clusterBalloonContentLayoutHeight: 230,
+                        clusterBalloonPagerSize: 10,
+                        clusterize: true,
+                        gridSize: 42,
+                        clusterDisableClickZoom: true
+                    });
+                }else{
+                    objectManager = new ymaps.ObjectManager({
+                        clusterDisableClickZoom: true,
+                        clusterOpenBalloonOnClick: true,
+                        // Устанавливаем стандартный макет балуна кластера "Карусель".
+                        clusterBalloonContentLayout: 'cluster#balloonCarousel',
+                        // Устанавливаем режим открытия балуна. 
+                        // В данном примере балун никогда не будет открываться в режиме панели.
+                        clusterBalloonPanelMaxMapArea: 0,
+                        // Устанавливаем размеры макета контента балуна (в пикселях).
+                        
+                        // clusterBalloonContentLayoutWidth: 250,
+                        clusterBalloonContentLayoutHeight: 220,
+                        clusterBalloonPagerSize: 10,
+                        clusterize: true,
+                        gridSize: 42,
+                        clusterDisableClickZoom: true
+                    });
+                }
+                
                 objectManager.objects.options.set('preset', 'islands#blueDotIcon');
                 objectManager.clusters.options.set('preset', 'islands#blueDotIcon');
                 myMap.geoObjects.add(objectManager);
@@ -207,7 +272,7 @@
                         itemSelectableLayout: 'round#listBoxItemSelectableLayout',
                         float: 'none',
                         position: {
-                            bottom: '40px',
+                            bottom: '45px',
                             left: '10px'
                         }
                     }

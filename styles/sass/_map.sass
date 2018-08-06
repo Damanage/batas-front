@@ -1,0 +1,81 @@
+.bl-title
+    color: #9dd1e0
+
+.bl-descr
+    padding: 10px
+    border: 1px dashed #9dd1e0
+    border-radius: 12px
+.bl-part
+    padding: 5px 0
+.bl-footer
+    
+    display: flex
+    justify-content: space-between
+    
+.buy-btn
+    background-color: #9dd1e0
+    border: none
+    border-radius: 12px
+    padding: 10px 15px
+    color: white
+    font-weight: 500
+    float: right
+    margin-top: 5px
+    margin-bottom: 5px
+
+    &:hover
+        background-color: #52bddc
+
+.bl-details
+    font-weight: 500
+    color: #636363
+    text-align: center
+    border-radius: 8px
+    padding: 5px 0
+    background: linear-gradient(to top, #52bddc 0%,#8ac7d8 16%,#c0d5e5 47%,#f7f7f7 89%)
+    position: relative
+    img
+        border-radius: 8px 
+        transform: scaleY(0)
+        transition: transform .15s linear
+        transform-origin: top
+        overflow: hidden
+    summary
+        display: inline-block
+        padding-left: 1.5em
+        cursor: pointer
+        outline: 0
+        transition: color .12s
+        &:hover
+            color: #d06c6c
+        &::-webkit-details-marker 
+            display: none
+        &::-moz-list-bullet 
+            list-style-type: none
+        // &::before 
+        //     content: ""
+        //     left: 0
+        //     position: absolute
+        //     background: url("./../../img/pic.svg") no-repeat 50% 50% / 1em 1em
+        //     width: 1.3em
+        //     height: 1.3em
+        //     transition: transform .1s linear
+        //     color: #636363
+        
+details[open]
+    min-height: 2em
+    & img
+        transition: transform .15s linear 
+        transform: scaleY(1)
+        width: 60% 
+    
+    // summary 
+    //     color: #d06c6c
+    // & ~ * 
+    //     transform: scaleY(1)
+    &:before 
+        transform: rotate(90deg)   
+
+            
+    
+    
