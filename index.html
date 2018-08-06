@@ -42,130 +42,95 @@
             <a href="about.html">О Проекте</a>
         </div>
     </footer> 
+    
+    <script src="battas.json" type="application/json" >  </script>
     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
     <script src="scripts/circle-btn.js"></script>
+    <script>
+        let dataFile = {"total_rows":6,"offset":0,"rows":[
+                {"id":"2d986e7aecd232f9da171c8f73c22045","key":"2d986e7aecd232f9da171c8f73c22045","value":{"_id":"2d986e7aecd232f9da171c8f73c22045","_rev":"4-48d5d3f400f3eb9a364d186eaa7b4d40","type":"Battery","geometry":{"type":"Point","coordinates":[55.813760, 37.479642]},"properties":{"product":"A27","price":"600","currency":"RUB","fromdate":"2018-05-28","comments":"new point"},"status":"reserved"}}
+                ,{"id":"61470bcb013d09559515a2b28bd6591a","key":"61470bcb013d09559515a2b28bd6591a","value":{"_id":"61470bcb013d09559515a2b28bd6591a","_rev":"16-73fb347bf0f80e7f43c234b1ab0da467","type":"Battery","geometry":{"type":"Point","coordinates":[55.813415, 37.477250]},"properties":{"product":"CR2032","price":"500","currency":"RUB","fromdate":"2017-12-19","comments":"Pub 2"},"status":"sold"}}
+                ,{"id":"675cac8dc321cebfdab08d55a6b82fce","key":"675cac8dc321cebfdab08d55a6b82fce","value":{"_id":"675cac8dc321cebfdab08d55a6b82fce","_rev":"5-dbb9493e3632fc2c609e6aeca83126df","type":"Battery","geometry":{"type":"Point","coordinates":[55.812896, 37.480085]},"properties":{"product":"AAA","price":"300","currency":"RUB","fromdate":"2017-12-19","comments":"Pub 3"},"status":"reserved"}}
+                ,{"id":"8aafd7dd3882302c6b9a507d99515128","key":"8aafd7dd3882302c6b9a507d99515128","value":{"_id":"8aafd7dd3882302c6b9a507d99515128","_rev":"3-19e73c463b98ce2265133763c512c15c","type":"Battery","geometry":{"type":"Point","coordinates":[55.814793, 37.478859]},"properties":{"product":"AAA","price":"300","currency":"RUB","fromdate":"2017-12-19","comments":"Pub 4"},"status":"reserved"}}
+                ,{"id":"8fe258bb4b2f91f5c463a7229e085c64","key":"8fe258bb4b2f91f5c463a7229e085c64","value":{"_id":"8fe258bb4b2f91f5c463a7229e085c64","_rev":"106-fd466268ca7ab9fdcdf07fa62060eda5","type":"Battery","geometry":{"type":"Point","coordinates":[115.083898,-8.370659]},"properties":{"product":"AAA","price":"400","currency":"RUB","fromdate":"2017-12-11","comments":"Pub 5"},"status":"reserved"}}
+
+                ,{"id":"123","key":"123","value":{"_id":"8fe258bsfb4b2f91f5c463a7229e085c64","_rev":"106-fd466268ca7ab9fdcdf07fa62060eda5","type":"Battery","geometry":{"type":"Point","coordinates":[55.802890, 37.657000]},"properties":{"product":"AAA","price":"400","currency":"RUB","fromdate":"2017-12-11","comments":"аккуратненько в кустиках"},"status":"reserved"}}
+                ,{"id":"456","key":"456","value":{"_id":"8fe258bb4b2f91f5c463a7229evv85c64","_rev":"106-fd466268ca7ab9fdcdf07fa62060eda5","type":"Battery","geometry":{"type":"Point","coordinates":[55.811977, 37.656785]},"properties":{"product":"VGA","price":"4100","currency":"RUB","fromdate":"2017-12-11","comments":"под елкой"},"status":"reserved"}}
+                ,{"id":"789","key":"789","value":{"_id":"8fe258bb4bv2f91fsf5c463a7229e085c64","_rev":"106-fd466268ca7ab9fdcdf07fa62060eda5","type":"Battery","geometry":{"type":"Point","coordinates":[55.806806, 37.681247]},"properties":{"product":"AVA","price":"1400","currency":"RUB","fromdate":"2017-12-11","comments":"Под полицейским участком"},"status":"reserved"}}
+                ,{"id":"321","key":"321","value":{"_id":"8fe258bb4b2f91f5c463a7229evc085c64","_rev":"106-fd466268ca7ab9fdcdf07fa62060eda5","type":"Battery","geometry":{"type":"Point","coordinates":[55.794308, 37.677814]},"properties":{"product":"CR2032","price":"400","currency":"RUB","fromdate":"2017-12-11","comments":"Лишь избранный обрящет сей ценный артефакт"},"status":"reserved"}}
+                ]
+            }
+        
+        class DataMap {
+            constructor(jsonFile){
+                this.data = {
+                    type: "FeatureCollection",
+                    features: []
+
+                },
+                this.json = jsonFile;
+            };
+
+            get getData(){
+                return this.data
+            }
+
+            set setData(extData){
+                extData.forEach(element => {
+                    let obj = {
+                        id: element.id,
+                        type: 'Feature',
+                        geometry: {
+                            type: 'Point',
+                            coordinates: element.value.geometry.coordinates
+                        },
+                        properties: {
+                            hintContent: `${element.value.properties.product}`,
+                            balloonContent: 
+                                `
+                                <p class="bl-content"> ${element.value.properties.comments} </p>
+                                <p class="price">
+                                        ${element.value.properties.price} <span class="units">${element.value.properties.currency}</span>
+                                </p>
+                                <p class="creation-time">
+                                    Дата создания: ${element.value.properties.fromdate}
+                                </p>
+                                ` ,
+                            clusterCaption: `${element.value.properties.product}`,
+                            // hintContent: "<strong>Текст  <s>подсказки</s></strong>"
+                        },
+                        options: {
+                            iconLayout: 'default#imageWithContent',
+                            // Своё изображение иконки метки.
+                            iconImageHref: 'img/batt.png',
+                            // Размеры метки.
+                            iconImageSize: [48, 48],
+                            // Смещение левого верхнего угла иконки относительно
+                            // её "ножки" (точки привязки).
+                            iconImageOffset: [-24, -24],
+                            // Смещение слоя с содержимым относительно слоя с картинкой.
+                            iconContentOffset: [15, 15],
+                            // Макет содержимого.
+                            
+                        }
+                    };
+
+                    this.data.features.push(obj); 
+                });
+            }
+        }
+
+        let dick = new DataMap(dataFile.rows)
+        dick.setData = dataFile.rows;
+    </script>
     <script>    
         
         
         ymaps.ready(function init(){
 
 
-            let dataMap = {
-            type: "FeatureCollection",
-            features: [{
-                id: 01,
-                type: 'Feature',
-                geometry: {
-                    type: 'Point',
-                    coordinates: [55.813760, 37.479642]
-                },
-                properties: {
-                    hintContent: 'Battery must be there',
-                    balloonContent: '<p class="test">content content content</p>',
-                    clusterCaption: "<strong><s>Еще</s> одна</strong> метка",
-                    // hintContent: "<strong>Текст  <s>подсказки</s></strong>"
-                },
-                options: {
-                    iconLayout: 'default#imageWithContent',
-                    // Своё изображение иконки метки.
-                    iconImageHref: 'img/batt.png',
-                    // Размеры метки.
-                    iconImageSize: [48, 48],
-                    // Смещение левого верхнего угла иконки относительно
-                    // её "ножки" (точки привязки).
-                    iconImageOffset: [-24, -24],
-                    // Смещение слоя с содержимым относительно слоя с картинкой.
-                    iconContentOffset: [15, 15],
-                    // Макет содержимого.
-                    
-                }
-            },
-            {
-                id: 02,
-                type: 'Feature',
-                geometry: {
-                    type: 'Point',
-                    coordinates: [55.813415, 37.477250]
-                },
-                properties: {
-                    hintContent: 'Battery must be there',
-                    balloonContent: '<p class="test">content content content</p>',
-                    clusterCaption: "<strong><s>Еще</s> одна</strong> метка",
-                    // hintContent: "<strong>Текст  <s>подсказки</s></strong>"
-                },
-                options: {
-                    iconLayout: 'default#imageWithContent',
-                    // Своё изображение иконки метки.
-                    iconImageHref: 'img/batt.png',
-                    // Размеры метки.
-                    iconImageSize: [48, 48],
-                    // Смещение левого верхнего угла иконки относительно
-                    // её "ножки" (точки привязки).
-                    iconImageOffset: [-24, -24],
-                    // Смещение слоя с содержимым относительно слоя с картинкой.
-                    iconContentOffset: [15, 15],
-                    // // Макет содержимого.
-                    
-                }
-            },
-            {
-                id: 03,
-                type: 'Feature',
-                geometry: {
-                    type: 'Point',
-                    coordinates: [55.812896, 37.480085]
-                },
-                properties: {
-                    hintContent: 'Battery must be there',
-                    balloonContent: '<p class="test">content content content</p>',
-                    clusterCaption: "<strong><s>Еще</s> одна</strong> метка",
-                    // hintContent: "<strong>Текст  <s>подсказки</s></strong>"
-                },
-                options: {
-                    iconLayout: 'default#imageWithContent',
-                    // Своё изображение иконки метки.
-                    iconImageHref: 'img/batt.png',
-                    // Размеры метки.
-                    iconImageSize: [48, 48],
-                    // Смещение левого верхнего угла иконки относительно
-                    // её "ножки" (точки привязки).
-                    iconImageOffset: [-24, -24],
-                    // Смещение слоя с содержимым относительно слоя с картинкой.
-                    iconContentOffset: [15, 15],
-                    // Макет содержимого.
-                    
-                }
-            },
-            {
-                id: 04,
-                type: 'Feature',
-                geometry: {
-                    type: 'Point',
-                    coordinates: [55.814793, 37.478859]
-                },
-                properties: {
-                    hintContent: 'Battery must be there',
-                    balloonContent: '<p class="test">content content content</p>',
-                    clusterCaption: "<strong><s>Еще</s> одна</strong> метка",
-                    // hintContent: "<strong>Текст  <s>подсказки</s></strong>"
-                },
-                options: {
-                    iconLayout: 'default#imageWithContent',
-                    // Своё изображение иконки метки.
-                    iconImageHref: 'img/batt.png',
-                    // Размеры метки.
-                    iconImageSize: [48, 48],
-                    // Смещение левого верхнего угла иконки относительно
-                    // её "ножки" (точки привязки).
-                    iconImageOffset: [-24, -24],
-                    // Смещение слоя с содержимым относительно слоя с картинкой.
-                    iconContentOffset: [15, 15],
-                    // Макет содержимого.
-                    
-                }
-            }],
-
-        }
+            let dataMap = new DataMap(dataFile.rows);
+            dataMap.setData = dataFile.rows;
 
 
             const myMap = new ymaps.Map("map", {
@@ -188,14 +153,14 @@
                 objectManager.objects.options.set('preset', 'islands#blueDotIcon');
                 objectManager.clusters.options.set('preset', 'islands#blueDotIcon');
                 myMap.geoObjects.add(objectManager);
-                objectManager.add(dataMap);
+                objectManager.add(dataMap.getData);
             }
             function mapControls(){
                 let zoomControl = new ymaps.control.ZoomControl({
                     options: {
                         layout: 'round#zoomLayout',
                         position: {
-                            right: '0px',
+                            right: '10px',
                             top: '200px'
                         }
                     }
@@ -206,7 +171,7 @@
                     options: {
                         layout: 'round#buttonLayout',
                         position: {
-                            bottom: '30px',
+                            bottom: '40px',
                             right: '10px'
                         }
                     }
@@ -220,14 +185,18 @@
                     },
                     options: {
                         layout: 'round#buttonLayout'
+                    },
+                    position: {
+                        right: '10px',
+                        top: '5px'
                     }
                 })
                 myMap.controls.add(fullScreenCtrl);
                 
                 myMap.controls.add('searchControl', {
                     position: {
-                        left: '5px',
-                        top: '5px'
+                        left: '10px',
+                        top: '15px'
                     }
                 });
 
